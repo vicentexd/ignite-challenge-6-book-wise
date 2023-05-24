@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${nunitoFont.className} bg-gray-800 p-5`}>
+      <body className={`${nunitoFont.className} flex items-center justify-center h-screen w-screen  bg-gray-800 m-5`}>
         {children}
       </body>
     </html>
