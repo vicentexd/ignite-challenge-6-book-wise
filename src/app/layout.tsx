@@ -14,9 +14,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
-      <body className={`${nunitoFont.className} flex items-center justify-center h-screen w-screen  bg-gray-800 m-5`}>
+      <body className={`${nunitoFont.className} overflow-x-hidden flex items-center justify-center h-screen w-screen  bg-gray-800 m-5`}>
         <Providers>
           {children}
         </Providers>
