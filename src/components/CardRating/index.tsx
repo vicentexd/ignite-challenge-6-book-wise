@@ -5,13 +5,13 @@ import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale'
 
-type Data = Rating & {
+export type DataCard = Rating & {
   book: Book;
   user: User;
 }
 
 type Props = {
-  data: Data
+  data: DataCard
   cardColor?: 'light' | 'dark'
   showUser?: boolean;
   showRatingDateOnCardTop?: boolean;
@@ -52,7 +52,7 @@ export function CardRating({ data, showRatingDateOnCardTop = false, showUser = f
       )}
 
       <div className='flex gap-5'>
-        <Image className='rounded-sm' alt={book.name} src={`${book.cover_url}`} height={152} width={108} />
+        <Image className='rounded-sm w-auto h-auto' alt={book.name} src={`${book.cover_url}`} height={152} width={108} />
 
 
         <div className='flex flex-col gap-5'>

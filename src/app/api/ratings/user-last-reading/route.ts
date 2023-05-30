@@ -1,14 +1,11 @@
-import { getServerSession } from 'next-auth'
-import { NextResponse } from 'next/server'
-import { buildNextAuthOptions } from '../../auth/[...nextauth]/route'
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST() {
-  const session = await getServerSession(buildNextAuthOptions())
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId')
 
-  console.log('asdqasduashduashud')
-
-  if (!session) {
+  if (!userId) {
     return new Response(undefined, {
       status: 400,
     })
@@ -16,12 +13,16 @@ export async function POST() {
 
   const getLastRating = await prisma.rating.findFirst({
     where: {
-      user_id: session.user.id,
+      user_id: userId,
     },
     orderBy: {
       created_at: 'desc',
     },
+    include: {
+      book: true,
+      user: true
+    }
   })
 
-  return NextResponse.json({ getLastRating })
+  return NextResponse.json({ ...getLastRating })
 }

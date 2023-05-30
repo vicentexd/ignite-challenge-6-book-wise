@@ -1,57 +1,97 @@
-
 import { buildNextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
-import { CardPreview } from "@/components/CardPreview";
-import { CardRating } from "@/components/CardRating";
+import { CardRating, DataCard } from "@/components/CardRating";
 import { LinkButton } from "@/components/Link";
 import { PageHeader } from "@/components/PageHeader";
-import { api } from "@/lib/axios";
-import { Book, Rating, User } from "@prisma/client";
+import { fetchWrapper } from "@/lib/fetch";
 import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { ListRatings } from "./components/ListRatings";
+import { BookData, CardPreview } from "@/components/CardPreview";
+
+
 
 async function getSession() {
   const session = await getServerSession(buildNextAuthOptions())
 
-  console.log('session', session);
 
   return session
 }
 
-async function getLastRating() {
-  try {
-    const data = await api.post('/ratings/user-last-reading');
+async function getMostRatedBooks() {
+  const response = await fetchWrapper<{ books: BookData[] }>('books/get-most-rated')
+  console.log('response', response)
 
-    console.log('data', JSON.stringify(data, null, 2));
+  return response
+}
+
+async function getLastUserRating(userId: string | undefined) {
+  try {
+    if (!userId) return null
+
+    const data = await fetchWrapper<DataCard | null>(`ratings/user-last-reading?userId=${userId}`, {
+      method: 'GET'
+    });
 
     return data
   } catch (error) {
-    console.log('error', error.message)
-    console.log('AAAAAAAAAAAAA')
     return null
   }
 }
 
 export default async function Home() {
   const session = await getSession();
-  const lastRating = await getLastRating();
 
-  // const [session, lastRating] = await Promise.all([sessionData, lastRatingData])
+  const { books: getRatedBooks } = await getMostRatedBooks();
 
-  console.log('lastRating', JSON.stringify(lastRating, null, 2));
+  const lastUserRating = await getLastUserRating(session?.user.id);
 
   return (
-    <div className="flex flex-1 flex-col items-start pt-12 pr-16 ">
+    <div className="flex max-h-screen max-w-screen flex-1 flex-col items-start pt-12">
       <PageHeader name="Início" page="home" />
-      {session && (
-        <div className="flex flex-col gap-4 mt-10">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-100" >Sua última leitura</span>
 
-            <LinkButton color="purple" size="sm" text="Ver todas" />
-          </div>
-        </div>
-      )}
+      <div className="flex w-full h-full bg-purple-100 gap-16 flex-col-reverse 2xl:flex-row">
+        <section className="flex 2xl:w-2/3 h-full flex-col bg-purple-200">
+          {session && lastUserRating && (
+            <div className="flex basis-1/3 flex-col gap-4 mt-10">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-100" >Sua última leitura</span>
+
+                <LinkButton color="purple" size="sm" text="Ver todas" />
+              </div>
+              <CardRating data={lastUserRating} cardColor="light" />
+
+            </div>
+          )}
+
+          {/* <div className="flex h-full flex-col gap-4 mt-10 justify-start overflow-hidden">
+            <span className="text-sm text-gray-100" >Avaliações mais recentes</span>
+            <ListRatings userId={session?.user.id} />
+          </div> */}
+        </section>
+
+        <section className="flex 2xl:w-1/3 bg-green-100 max-w-full">
+          {getRatedBooks && (
+            <div className="flex flex-col">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-100" >Livros populares</span>
+
+                <LinkButton color="purple" size="sm" text="Ver todas" />
+              </div>
+
+
+              {/* <ul className="flex overflow-hidden">
+                {getRatedBooks.map(book => (
+                  <li key={book.id}>
+                    <CardPreview book={book} imageSize="sm" key={book.id} />
+                  </li>
+                ))
+                }
+              </ul> */}
+
+
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   )
 }

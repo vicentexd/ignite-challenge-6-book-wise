@@ -17,7 +17,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${nunitoFont.className} overflow-x-hidden flex items-center justify-center h-screen w-screen  bg-gray-800 m-5`}>
+      <body suppressHydrationWarning={true} className={`${nunitoFont.className} overflow-x-hidden flex items-center justify-center max-h-screen max-w-screen  bg-gray-800 m-5`}>
         <Providers>
           {children}
         </Providers>
