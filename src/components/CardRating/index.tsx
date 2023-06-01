@@ -23,7 +23,7 @@ export function CardRating({ data, showRatingDateOnCardTop = false, showUser = f
   return (
     <div className={`flex flex-col gap-8 p-6 relative rounded-md ${cardColor === 'dark' ? 'bg-gray-700' : 'bg-gray-600'}`} >
       {showRatingDateOnCardTop && (
-        <div className='absolute -top-8 left-0'>
+        <div className='absolute left-0 -top-8'>
           <p className='text-sm text-gray-300'>{formatDistanceToNow(new Date(data.created_at), {
             locale: ptBR,
             addSuffix: true,
@@ -37,12 +37,12 @@ export function CardRating({ data, showRatingDateOnCardTop = false, showUser = f
 
       {showUser && (
         <div className='flex items-center gap-4'>
-          <div className="h-9 w-9 rounded-full p-px flex items-center justify-center bg-gradient-to-r from-green-100 to-purple-100">
-            <Image className="rounded-full overflow-hidden " alt={user.name} src={user.avatar_url!} width={36} height={36} />
+          <div className="flex items-center justify-center p-px rounded-full h-9 w-9 bg-gradient-to-r from-green-100 to-purple-100">
+            <Image className="w-auto h-auto overflow-hidden rounded-full " alt={user.name} src={user.avatar_url!} width={36} height={36} />
           </div>
 
           <div className='flex flex-col justify-between'>
-            <h6 className='text-md text-gray-200'>{user.name}</h6>
+            <h6 className='text-gray-200 text-md'>{user.name}</h6>
             <p className='text-sm text-gray-400'>{formatDistanceToNow(new Date(data.created_at), {
               locale: ptBR,
               addSuffix: true,
@@ -52,7 +52,7 @@ export function CardRating({ data, showRatingDateOnCardTop = false, showUser = f
       )}
 
       <div className='flex gap-5'>
-        <Image className='rounded-sm w-auto h-auto' alt={book.name} src={`${book.cover_url}`} height={152} width={108} />
+        <Image className='w-auto h-auto rounded-sm' alt={book.name} src={`${book.cover_url}`} height={152} width={108} />
 
 
         <div className='flex flex-col gap-5'>
@@ -64,11 +64,11 @@ export function CardRating({ data, showRatingDateOnCardTop = false, showUser = f
           )}
 
           <div className='flex flex-col justify-between'>
-            <h4 className='text-md font-bold text-gray-100'>{book.name}</h4>
-            <p className='text-md text-gray-400'>{book.author}</p>
+            <h4 className='font-bold text-gray-100 text-md'>{book.name}</h4>
+            <p className='text-gray-400 text-md'>{book.author}</p>
           </div>
 
-          <p className='text-md text-gray-300'>{data.description}</p>
+          <p className='text-gray-300 text-md'>{data.description}</p>
         </div>
       </div>
     </div>

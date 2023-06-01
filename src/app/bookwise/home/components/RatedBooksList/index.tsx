@@ -1,8 +1,10 @@
 'use client'
 
-import { BookData, CardPreview } from "@/components/CardPreview"
-import { motion, useMotionValue, useScroll } from 'framer-motion'
+import { BookData } from "@/@types"
+import { CardPreview } from "@/components/CardPreview"
+import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from "react"
+import { ModalBook } from "./ModalBook"
 
 type Props = {
   books: BookData[]
@@ -14,6 +16,9 @@ export function RatedBooksList({ books }: Props) {
   const [sliderWidth, setSliderWidth] = useState(0);
   const [sliderChildrenWidth, setSliderChildrenWidth] = useState(0);
   const [sliderConstraints, setSliderConstraints] = useState(0);
+
+  const [selectedBook, setSelectedBook] = useState<BookData>()
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (!ref) return;
@@ -47,6 +52,12 @@ export function RatedBooksList({ books }: Props) {
     <motion.div className="flex overflow-x-hidden">
       <motion.div
         drag='x'
+        onDragStart={() => {
+          setIsDragging(true)
+        }}
+        onDragEnd={() => {
+          setIsDragging(false)
+        }}
         ref={ref}
         dragTransition={{
           bounceDamping: 100,
@@ -54,16 +65,19 @@ export function RatedBooksList({ books }: Props) {
         }}
         initial={{ x: 0 }}
         dragConstraints={{
-          left: -sliderConstraints,
+          left: -(sliderConstraints + 12),
           right: 0,
         }}
         className="flex flex-row max-w-[95vw] sm:max-w-[50vw] gap-4 pb-2 2xl:flex-col"
       >
         {books.map((book) => (
-          <CardPreview book={book} imageSize="sm" key={book.id} />
+          <CardPreview onClick={!isDragging ? el => setSelectedBook(el) : undefined} book={book} imageSize="sm" key={book.id} />
         ))}
       </motion.div>
 
+
+
+      <ModalBook book={selectedBook!} handleModal={() => setSelectedBook(undefined)} visible={!!selectedBook} />
     </motion.div>
   )
 }

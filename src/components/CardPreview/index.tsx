@@ -1,24 +1,23 @@
-import { Book, Rating } from "@prisma/client";
 import Image from "next/image";
 import { RatingStars } from "../RatingStars";
+import { BookData } from "@/@types";
 
-export type BookData = Book & {
-  ratings: Rating[];
-};
 
 type Props = {
   book: BookData;
   imageSize?: "sm" | "md";
+  onClick?: (book: BookData) => void;
 };
 
-export function CardPreview({ book, imageSize = "md" }: Props) {
+export function CardPreview({ book, imageSize = "md", onClick }: Props) {
   const averageRating = Math.round(
     book.ratings.reduce((acc, cur) => acc + cur.rate, 0) / book.ratings.length
   );
 
   return (
     <div
-      className={`flex flex-col gap-8 p-6 relative rounded-md bg-gray-700 min-w-[380px]`}
+      className={`flex flex-col gap-8 p-6 relative rounded-md bg-gray-700 min-w-[380px] ${onClick && 'cursor-pointer'}`}
+      onClick={onClick ? () => onClick(book) : undefined}
     >
       <div className="flex flex-row gap-5">
         <Image
@@ -31,8 +30,8 @@ export function CardPreview({ book, imageSize = "md" }: Props) {
 
         <div className="flex flex-col justify-between">
           <div className="flex flex-col justify-between">
-            <h4 className="text-md font-bold text-gray-100">{book.name}</h4>
-            <p className="text-md text-gray-400">{book.author}</p>
+            <h4 className="font-bold text-gray-100 text-md">{book.name}</h4>
+            <p className="text-gray-400 text-md">{book.author}</p>
           </div>
 
           <RatingStars starsNumber={averageRating} />

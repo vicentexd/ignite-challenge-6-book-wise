@@ -9,7 +9,16 @@ export async function GET() {
       }
     },
     include: {
-      ratings: true,
+      ratings: {
+        include: {
+          user: true,
+        }
+      },
+      categories: {
+        include: {
+          category: true
+        }
+      },
     },
     take: 4,
   })

@@ -5,8 +5,8 @@ import { PageHeader } from "@/components/PageHeader";
 import { fetchWrapper } from "@/lib/fetch";
 import { getServerSession } from "next-auth";
 import { ListRatings } from "./components/ListRatings";
-import { BookData, CardPreview } from "@/components/CardPreview";
 import { RatedBooksList } from "./components/RatedBooksList";
+import { BookData } from "@/@types";
 
 async function getSession() {
   const session = await getServerSession(buildNextAuthOptions());
