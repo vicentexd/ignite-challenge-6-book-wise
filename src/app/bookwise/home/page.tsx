@@ -6,6 +6,7 @@ import { fetchWrapper } from "@/lib/fetch";
 import { getServerSession } from "next-auth";
 import { ListRatings } from "./components/ListRatings";
 import { BookData, CardPreview } from "@/components/CardPreview";
+import { RatedBooksList } from "./components/RatedBooksList";
 
 async function getSession() {
   const session = await getServerSession(buildNextAuthOptions());
@@ -57,28 +58,24 @@ export default async function Home() {
       >
         <div className="flex flex-row w-full">
           {getRatedBooks && (
-            <div>
-              <div className="flex justify-between items-center">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-100">Livros populares</span>
-                <LinkButton color="purple" size="sm" text="Ver todas" />
+                <LinkButton href={'/bookwise/explorer'} color="purple" size="sm" text="Ver todas" />
               </div>
 
-              <div className="flex flex-row overflow-x-auto max-w-[95vw] sm:max-w-[50vw] gap-4 pb-2 2xl:flex-col">
-                {getRatedBooks.map((book) => (
-                  <CardPreview book={book} imageSize="sm" key={book.id} />
-                ))}
-              </div>
+              <RatedBooksList books={getRatedBooks} />
             </div>
           )}
         </div>
         <div className="flex flex-col gap-6">
           {session && lastUserRating && (
-            <div className="flex flex-col w-full">
-              <div className="flex justify-between items-center">
+            <div className="flex flex-col w-full gap-6" >
+              <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-100">
                   Sua última leitura
                 </span>
-                <LinkButton color="purple" size="sm" text="Ver todas" />
+                <LinkButton href={'/bookwise/profile'} color="purple" size="sm" text="Ver todas" />
               </div>
               <CardRating data={lastUserRating} cardColor="light" />
             </div>
