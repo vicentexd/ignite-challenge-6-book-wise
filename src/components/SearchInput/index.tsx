@@ -10,7 +10,7 @@ export function SearchInput({ ...rest }: React.InputHTMLAttributes<HTMLInputElem
   }
 
   return (
-    <div className="flex items-center ">
+    <div className="flex items-center w-full">
       <div className="relative w-full ">
         <div className="absolute px-5 inset-y-0 right-0 flex items-center pointer-events-none">
           <MagnifyingGlass className={`text-xl ${isFocus ? 'text-green-200 ' : 'text-gray-500 '}`} />

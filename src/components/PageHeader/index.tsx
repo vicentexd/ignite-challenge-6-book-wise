@@ -1,8 +1,5 @@
 "use client"
 import { Binoculars, House, User } from "@phosphor-icons/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { motion } from 'framer-motion'
 
 
 type Props = {
@@ -33,7 +30,7 @@ export function PageHeader({ page, name }: Props) {
   return (
     <div className="flex items-center gap-3">
       {getIcon()}
-      <h1 className="text-2xl text-gray-100 font-bold">{name}</h1>
+      <h1 className="text-2xl font-bold text-gray-100">{name}</h1>
     </div>
   )
 }
