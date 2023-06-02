@@ -56,7 +56,7 @@ export default async function Home() {
   const lastUserRating = await getLastUserRating(session?.user.id);
 
   return (
-    <div className="flex items-start w-full pt-5 flex-col gap-3 max-w-[100vw] sm:max-w-[50vw] 2xl:max-w-full max-h-[100vh]">
+    <div className="flex min-h-screen items-start w-full pt-5 flex-col gap-3 max-w-[100vw] sm:max-w-[50vw] 2xl:max-w-full max-h-[100vh]">
       <PageHeader name="Início" page="home" />
       <div
         id="scrollId"
@@ -87,7 +87,7 @@ export default async function Home() {
             </div>
           )}
 
-          <div className="pb-5 ">
+          <div className="flex flex-col gap-4 pb-5">
             <span className="text-sm text-gray-100">
               Avaliações mais recentes
             </span>

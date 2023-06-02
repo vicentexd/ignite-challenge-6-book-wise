@@ -1,12 +1,11 @@
 'use client'
 
-import { SignIn, SignOut } from "@phosphor-icons/react";
-import { signOut, useSession } from "next-auth/react"
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { motion } from 'framer-motion'
 import { useSignInModal } from "@/hook/useSignInModal";
+import { SignIn, SignOut } from "@phosphor-icons/react";
+import { motion } from 'framer-motion';
 import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import Image from "next/image";
 
 type Props = {
   data: Session | null
@@ -22,22 +21,22 @@ export function ProfileSection({ data }: Props) {
   }
 
   return (
-    <div className="flex p-1 gap-3 items-start">
+    <div className="flex items-start gap-3 p-1">
       {!data ? (
         <>
-          <h6 className="text-md font-bold text-gray-100">Fazer Login</h6>
+          <h6 className="font-bold text-gray-100 text-md">Fazer Login</h6>
           <motion.button layoutId='modalSignIn' onClick={handleSignModal} >
-            <SignIn weight="bold" className="text-green-100 text-xl" size={22} />
+            <SignIn weight="bold" className="text-xl text-green-100" size={22} />
           </motion.button>
         </>
       ) : (
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full p-px flex items-center justify-center bg-gradient-to-r from-green-100 to-purple-100">
-            <Image className="rounded-full overflow-hidden " alt={data.user.name} src={data.user.avatar_url!} width={36} height={36} />
+          <div className="flex items-center justify-center p-px rounded-full h-9 w-9 bg-gradient-to-r from-green-100 to-purple-100">
+            <Image className="overflow-hidden rounded-full " alt={data.user.name} src={data.user.avatar_url!} width={36} height={36} />
           </div>
-          <h6 className="text-sm  text-gray-100">{data.user.name}</h6>
+          <h6 className="text-sm text-gray-100">{data.user.name}</h6>
           <button onClick={handleSignOut}>
-            <SignOut className="text-danger text-xl" size={22} />
+            <SignOut className="text-xl text-danger" size={22} />
           </button>
         </div>
       )}

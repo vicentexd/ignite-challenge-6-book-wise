@@ -1,3 +1,5 @@
+'use client'
+
 import { SignInModal } from "@/components/SignInModal";
 import React, { useContext, useMemo, useState } from "react";
 

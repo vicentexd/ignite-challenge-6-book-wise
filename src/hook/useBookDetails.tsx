@@ -1,3 +1,4 @@
+"use client"
 import { BookData } from "@/@types";
 import { ModalBook } from "@/components/ModalBook";
 import { fetchWrapper } from "@/lib/fetch";
