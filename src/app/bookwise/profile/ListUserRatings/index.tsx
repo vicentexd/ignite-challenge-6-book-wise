@@ -52,15 +52,16 @@ export function ListUserRatings({ userId }: Props) {
   const handleUpdateSearch = async (value: string) => {
     setList([])
     setSearch(value)
-    if(!value){
-      setPage(0)
-    }
+    setPage(1)
     await fetchData(1, value)
   }
   
   useEffect(() => {
     fetchData();
   }, []);
+
+
+  console.log(page)
 
   return (
     <div className="flex flex-col gap-12">

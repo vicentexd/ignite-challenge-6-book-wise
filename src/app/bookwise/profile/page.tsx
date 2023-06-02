@@ -25,7 +25,7 @@ export default async function Profile() {
   const session = await getSession(); 
   
   return (
-    <div className="flex flex-col flex-1 min-h-screen gap-3 pt-12 pr-16">
+    <div className="flex flex-col flex-1 min-h-screen gap-3 pt-12 md:pr-16">
       <PageHeader name="Perfil" page="profile" />
       
       <div 
