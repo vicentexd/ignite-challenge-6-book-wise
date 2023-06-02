@@ -11,10 +11,13 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { AnimatePresence, motion } from 'framer-motion';
+
+
 
 type Props = {
   user: User;
-  bookId: string;
+  closeInput: () => void
 }
 
 const ratingFormSchema = z.object({
@@ -24,8 +27,8 @@ const ratingFormSchema = z.object({
 
 type RatingFormData = z.infer<typeof ratingFormSchema>;
 
-export function RatingInput({ user, bookId }: Props) {
-  const { handleUpdateBook } = useBookDetail();
+export function RatingInput({ user, closeInput }: Props) {
+  const { handleUpdateBook, book } = useBookDetail();
 
   const {
     handleSubmit,
@@ -44,7 +47,7 @@ export function RatingInput({ user, bookId }: Props) {
   })
 
   const handleCleanInput = () => {
-    reset()
+    closeInput()
   }
 
   const handleSaveRating = async (data: RatingFormData) => {
@@ -54,7 +57,7 @@ export function RatingInput({ user, bookId }: Props) {
       rate,
       description,
       userId: user.id,
-      bookId,
+      bookId: book?.id,
     }
 
     await fetchWrapper('ratings/save-user-rating', {
@@ -65,10 +68,25 @@ export function RatingInput({ user, bookId }: Props) {
       },
     })
     await handleUpdateBook();
+    handleCleanInput();
   }
 
   return (
-    <form onSubmit={handleSubmit(handleSaveRating)} className="flex flex-col w-full gap-6 p-6 bg-gray-700 rounded-md">
+    <motion.form
+      initial={{ x: '50%', opacity: 0, scale: 0.5 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        x: 0,
+      }}
+      exit={{
+        x: '50%',
+        opacity: 0,
+        scale: 0.5,
+      }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
+      onSubmit={handleSubmit(handleSaveRating)}
+      className="flex flex-col w-full gap-6 p-6 bg-gray-700 rounded-md">
       <div className="flex gap-4">
         <div className="flex items-center justify-center p-px rounded-full h-9 w-9 bg-gradient-to-r from-green-100 to-purple-100">
           <Image className="overflow-hidden rounded-full " alt={user.name} src={user.avatar_url!} width={36} height={36} />
@@ -105,7 +123,7 @@ export function RatingInput({ user, bookId }: Props) {
           <LoadingSpinner />
         ) : (
           <>
-            <Button onClick={handleCleanInput}>
+            <Button type="button" onClick={handleCleanInput}>
               <X className="text-2xl text-purple-100" />
             </Button>
 
@@ -116,6 +134,6 @@ export function RatingInput({ user, bookId }: Props) {
           </>
         )}
       </div>
-    </form>
+    </motion.form>
   )
 }

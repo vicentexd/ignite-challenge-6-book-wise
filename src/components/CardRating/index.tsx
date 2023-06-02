@@ -4,6 +4,7 @@ import { RatingStars } from '../RatingStars';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale'
+import Link from 'next/link';
 
 export type DataCard = Rating & {
   book: Book;
@@ -38,7 +39,9 @@ export function CardRating({ data, showRatingDateOnCardTop = false, showUser = f
       {showUser && (
         <div className='flex items-center gap-4'>
           <div className="flex items-center justify-center p-px rounded-full h-9 w-9 bg-gradient-to-r from-green-100 to-purple-100">
-            <Image className="w-auto h-auto overflow-hidden rounded-full " alt={user.name} src={user.avatar_url!} width={36} height={36} />
+            <Link href={`/bookwise/profile?userId=${user.id}`}>
+              <Image className="w-auto h-auto overflow-hidden rounded-full " alt={user.name} src={user.avatar_url!} width={36} height={36} />
+            </Link>
           </div>
 
           <div className='flex flex-col justify-between'>

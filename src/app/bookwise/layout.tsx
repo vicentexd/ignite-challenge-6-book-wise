@@ -23,10 +23,10 @@ export default async function BookWiseLayout({
       <SignInModalProvider>
         <HeaderNav />
         <NavBar session={session} />
+        <BookDetailProvider>
+          {children}
+        </BookDetailProvider>
       </SignInModalProvider>
-      <BookDetailProvider>
-        {children}
-      </BookDetailProvider>
     </div>
   );
 }
