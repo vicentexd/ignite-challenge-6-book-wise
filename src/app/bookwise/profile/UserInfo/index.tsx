@@ -48,7 +48,7 @@ export function UserInfo({sessionUserId}: any) {
     <>
       {dataInfo && (
         <div className="flex flex-row items-end gap-6 my-8 2xl:items-baseline 2xl:my-0 2xl:flex-col">
-          <div className="flex flex-row items-end gap-3 2xl:border-l-2 2xl:border-x-gray-700 2xl:h-auto 2xl:flex-col 2xl:items-baseline 2xl:pl-12">
+          <div className="flex flex-row items-end gap-6 2xl:border-l-2 2xl:border-x-gray-700 2xl:h-auto 2xl:flex-col 2xl:items-baseline 2xl:pl-12">
             <div className="flex flex-col items-center">
               <div className="flex items-center justify-center w-12 h-12 p-px rounded-full bg-gradient-to-r from-green-100 to-purple-100">
                 <Image className="overflow-hidden rounded-full " alt={dataInfo.user?.name ?? ''} src={dataInfo.user?.avatar_url!} width={48} height={48} />
