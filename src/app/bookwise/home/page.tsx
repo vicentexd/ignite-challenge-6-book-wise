@@ -19,6 +19,12 @@ async function getMostRatedBooks() {
     "books/get-most-rated"
   );
 
+  if (!response) {
+    return {
+      books: []
+    }
+  }
+
   return response;
 }
 

@@ -3,6 +3,7 @@ import { Button } from "@/components/Button";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { RatingStars } from "@/components/RatingStars";
 import { TextArea } from "@/components/TextArea";
+import { useBookDetail } from "@/hook/useBookDetails";
 import { fetchWrapper } from "@/lib/fetch";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, X } from "@phosphor-icons/react";
@@ -24,6 +25,8 @@ const ratingFormSchema = z.object({
 type RatingFormData = z.infer<typeof ratingFormSchema>;
 
 export function RatingInput({ user, bookId }: Props) {
+  const { handleUpdateBook } = useBookDetail();
+
   const {
     handleSubmit,
     control,
@@ -61,6 +64,7 @@ export function RatingInput({ user, bookId }: Props) {
         "Content-Type": "application/json",
       },
     })
+    await handleUpdateBook();
   }
 
   return (

@@ -17,6 +17,8 @@ type Props = {
 export function ModalBook({ book, handleModal, visible }: Props) {
   const { data } = useSession();
 
+  const userAlreadyRatedBook = data?.user ? book?.ratings?.some(rating => rating.user_id === data?.user.id) : false
+
   return (
     <AnimatePresence>
       {visible && (
@@ -42,7 +44,7 @@ export function ModalBook({ book, handleModal, visible }: Props) {
               <h6 className="text-sm text-gray-200">Avaliações</h6>
 
               <div className="flex flex-col gap-3">
-                {data?.user && (
+                {data?.user && !userAlreadyRatedBook && (
                   <RatingInput bookId={book.id} user={data.user} />
                 )}
                 {book.ratings.map(rating => (

@@ -5,6 +5,7 @@ import { CardPreview } from "@/components/CardPreview"
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from "react"
 import { ModalBook } from "./ModalBook"
+import { useBookDetail } from "@/hook/useBookDetails"
 
 type Props = {
   books: BookData[]
@@ -12,12 +13,12 @@ type Props = {
 
 export function RatedBooksList({ books }: Props) {
   const ref = useRef<HTMLDivElement>(null)
+  const { handleModalBook } = useBookDetail();
 
   const [sliderWidth, setSliderWidth] = useState(0);
   const [sliderChildrenWidth, setSliderChildrenWidth] = useState(0);
   const [sliderConstraints, setSliderConstraints] = useState(0);
 
-  const [selectedBook, setSelectedBook] = useState<BookData>()
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -71,13 +72,9 @@ export function RatedBooksList({ books }: Props) {
         className="flex flex-row max-w-[95vw] sm:max-w-[50vw] gap-4 pb-2 2xl:flex-col"
       >
         {books.map((book) => (
-          <CardPreview onClick={!isDragging ? el => setSelectedBook(el) : undefined} book={book} imageSize="sm" key={book.id} />
+          <CardPreview onClick={!isDragging ? el => handleModalBook(el) : undefined} book={book} imageSize="sm" key={book.id} />
         ))}
       </motion.div>
-
-
-
-      <ModalBook book={selectedBook!} handleModal={() => setSelectedBook(undefined)} visible={!!selectedBook} />
     </motion.div>
   )
 }
