@@ -88,7 +88,7 @@ export function UserInfo({sessionUserId}: any) {
             <div className="flex flex-col items-center 2xl:flex-row 2xl:gap-5 2xl:justify-start">
               <BookmarkSimple className={`text-green-100`} size={32} />
               <div className="flex flex-col items-center 2xl:flex-col 2xl:items-start">
-                <p className="text-gray-100 text-md bold">{dataInfo.mostReadCategory.name}</p>
+                <p className="text-gray-100 text-md bold">{dataInfo.mostReadCategory?.name || 'N/A'}</p>
                 <p className="text-sm text-center text-gray-400 bold">
                   Categoria mais lida
                 </p>
