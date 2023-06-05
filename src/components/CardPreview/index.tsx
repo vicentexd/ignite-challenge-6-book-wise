@@ -16,7 +16,7 @@ export function CardPreview({ book, imageSize = "md", onClick }: Props) {
 
   return (
     <div
-      className={`flex flex-col gap-8 p-6 relative rounded-md bg-gray-700 min-w-[380px] ${onClick && 'cursor-pointer'}`}
+      className={`flex flex-col w-full gap-8 p-6 relative rounded-md bg-gray-700 min-w-[380px] ${onClick && 'cursor-pointer'} 2xl:max-w-[318px]`}
       onClick={onClick ? () => onClick(book) : undefined}
     >
       <div className="flex flex-row gap-5">

@@ -2,8 +2,8 @@ import { buildNextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 import { PageHeader } from "@/components/PageHeader";
 import { Category, User } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { ListUserRatings } from "./ListUserRatings";
-import { UserInfo } from "./UserInfo";
+import { ListUserRatings } from "./components/ListUserRatings";
+import { UserInfo } from "./components/UserInfo";
 
 
 

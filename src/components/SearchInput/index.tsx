@@ -12,10 +12,10 @@ export function SearchInput({ ...rest }: React.InputHTMLAttributes<HTMLInputElem
   return (
     <div className="flex items-center w-full">
       <div className="relative w-full ">
-        <div className="absolute px-5 inset-y-0 right-0 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none">
           <MagnifyingGlass className={`text-xl ${isFocus ? 'text-green-200 ' : 'text-gray-500 '}`} />
         </div>
-        <input onFocus={handleFocus} onBlur={handleFocus} type="text" {...rest} className=" outline-none py-3 px-5 bg-gray-800 border border-gray-500 text-gray-200 placeholder:text-gray-400 text-sm rounded-sm focus:ring-green-200 focus:border-green-200 block w-full " />
+        <input onFocus={handleFocus} onBlur={handleFocus} type="text" {...rest} className="block w-full px-5 py-3 text-sm text-gray-200 bg-gray-800 border border-gray-500 rounded-lg outline-none placeholder:text-gray-400 focus:ring-green-200 focus:border-green-200" />
       </div>
     </div>
   )

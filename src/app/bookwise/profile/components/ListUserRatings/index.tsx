@@ -3,7 +3,7 @@
 import { CardRating, DataCard } from "@/components/CardRating";
 import { SearchInput } from "@/components/SearchInput";
 import { fetchWrapper } from "@/lib/fetch";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -18,11 +18,13 @@ export function ListUserRatings({ userId }: Props) {
   const [search, setSearch] = useState('')
   const searchParams = useSearchParams()
   const queryUserId = searchParams.get('userId')
-
   async function fetchData(pageNumber = 1, search = '') {
     try {
-
-      if (!userId && !queryUserId) return null;
+      
+      if (!userId && !queryUserId){
+        console.log('a')
+        return null
+      };
 
       const { ratings, count } = await fetchWrapper<{
         ratings: DataCard[] | null;
@@ -60,8 +62,6 @@ export function ListUserRatings({ userId }: Props) {
     fetchData();
   }, []);
 
-
-  console.log(page)
 
   return (
     <div className="flex flex-col">
